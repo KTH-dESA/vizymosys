@@ -46,7 +46,7 @@ Colors are used to disaggregate scenarios, sectors of energy use or energy
 sources. Line patterns, point shapes or bar fill patterns may also be used to 
 provide more information as subscenarios. The columns `scenario`, `t`, `f` and 
 `Sector` can be used for this purpose (see **table 1** and **table 2**).
-### Data sources
+### Data sources and aggregation
 The `UseByTechnologyAnnual.csv` file is used (see **table 1**) for these plots in 
 combination with a custom excel file (see **table 2**) that provide information 
 about the technologies that should be considered and the sectors each technology 
@@ -103,14 +103,14 @@ source for a specific scenario.
 ![tfec-lines](images/tfec-co2-bars.svg)
 
 ### X-axis data
-Years in ascending order (column `y`).
+Years in ascending order (column `y`) or scenarios (column `scenario`).
 ### Y-axis data
 Total CO2 emissions values expressed in Mton (column `AnnualTechnologyEmission`).
 ### Colors
 Colors are used to disaggregate scenarios or stack emissions values of 
 different fuel sources. The columns `scenario` or `t` can be used for this 
 purpose (see **table 3**).
-### Data sources
+### Data sources and aggregation
 The `AnnualTechnologyEmission.csv` file is used (see **table 3**) for these plots.
 These `.csv` files for each scenario are added together and an extra column is 
 created to indicate the scenario. The resulting dataframe is 
@@ -149,7 +149,7 @@ Total electricity generation values expressed in PJ (column `ProductionByTechnol
 Colors are used to disaggregate scenarios or stack generation values of 
 different energy sources. The columns `scenario` and `Source` can be used for this 
 purpose (see **table 4**).
-### Data sources
+### Data sources and aggregation
 The `ProductionByTechnologyAnnual.csv` file is used (see **table 4**) for these 
 plots in combination with a custom excel file (see **table 5**) that provides 
 information about the technologies that should be considered and the energy sources
@@ -201,7 +201,7 @@ Total electricity demand values expressed in PJ (column `UseByTechnologyAnnual`)
 Colors are used to disaggregate scenarios or stack demand values of 
 different demand sectors. The columns `scenario` or `Sector` can be used for this 
 purpose (see **table 1** and **table 6**).
-### Data sources
+### Data sources and aggregation
 The `UseByTechnologyAnnual.csv` file is used (see **table 1**) for these 
 plots in combination with a custom excel file (see **table 6**) that provides 
 information about the technologies that should be considered and the demand 
@@ -242,7 +242,7 @@ Total installed capacity expressed in GW (column `TotalCapacityAnnual`).
 ### Colors
 Colors are used to stack total installed capacity of each technology. The 
 column `Source` is used for this purpose (see **table 5**).
-### Data sources
+### Data sources and aggregation
 The `TotalCapacityAnnual.csv` file is used (see **table 7**) for these 
 plots in combination with a custom excel file (see **table 5**) that provides 
 information about the technologies that should be considered and the power
@@ -280,7 +280,7 @@ stacked bar of emissions per fuel source for a specific scenario.
 ![tfec-lines](images/el-gen-co2-bars.svg)
 
 ### X-axis data
-Years in ascending order (column `y`).
+Years in ascending order (column `y`) or scenarios (column `scenario`).
 ### Y-axis data
 Total CO2 emissions values expressed in Mton (column `UseByTechnologyAnnual` * 
 `EmissionActivityRatio`).
@@ -288,7 +288,7 @@ Total CO2 emissions values expressed in Mton (column `UseByTechnologyAnnual` *
 Colors are used to disaggregate scenarios or stack emissions values of 
 different fuel sources. The columns `scenario` or `f` can be used for this 
 purpose (see **table 3**).
-### Data sources
+### Data sources and aggregation
 The `UseByTechnologyAnnual.csv` file is used (see **table 1**) and the 
 `EmissionActivityRatio`. These `.csv` files for each scenario are added together
 and an extra column is created to indicate the scenario. A complementary excel
@@ -304,6 +304,12 @@ The excel file could probably be omitted if naming conventions are used and a
 mapping function is implemented to translate such names (from columns ``t`` and ``f``) 
 into a more user friendly output and select the relevant technologies to display. 
 
+**Note:** we had an issue with this plot, as in the first versions of the model
+we where sourcing the technology emissions directly from the 
+`AnnualTechnologyEmission` file. However, at a later stage the model changed and
+now the emissions needed to be calculated by `UseByTechnologyAnnual` * 
+`EmissionActivityRatio`.
+
 ## Investment in new generation capacity
 This plot shows the **capital investment** for new electricity generation 
 capacity. It can be displayed as an annual investment line plot disaggregating 
@@ -315,14 +321,14 @@ stacked bar of annual investments per technology for a specific scenario.
 ![tfec-lines](images/el-gen-inv-bars.svg)
 
 ### X-axis data
-Years in ascending order (column `y`).
+Years in ascending order (column `y`) or scenarios (column `scenario`).
 ### Y-axis data
 Total investment expressed in M$ (column `CapitalInvestment`).
 ### Colors
 Colors are used to disaggregate scenarios or stack emissions values of 
 different technologies. The columns `scenario` or `Source` can be used for this 
 purpose (see **table 8** and **table 5**).
-### Data sources
+### Data sources and aggregation
 The `CapitalInvestment.csv` file is used (see **table 8**). These `.csv` files 
 for each scenario are added together and an extra column is created to indicate 
 the scenario. A complementary excel file is used (see **table 5**) in which the 
@@ -361,7 +367,7 @@ Years in ascending order (column `y`).
 Total investment expressed in M$ (column `TotalDiscountedCost`).
 ### Colors
 Colors are used to disaggregate scenarios. The column `scenario` is used.
-### Data sources
+### Data sources and aggregation
 The `TotalDiscountedCost.csv` file is used (see **table 9**). These `.csv` files 
 for each scenario are added together and an extra column is created to indicate 
 the scenario. The resulting dataframe is 
@@ -394,7 +400,7 @@ Percentage of energy generated by each energy type.
 ### Colors
 Colors are used to disaggregate energy types (i.e. fossil or renewable). 
 The column `scenario` is used to facet the results per scenario.
-### Data sources
+### Data sources and aggregation
 The `ProductionByTechnologyAnnual.csv` file is used (see **table 4**) in 
 combination with the energy generation excel file (see **table 5**). These 
 `.csv` files for each scenario are added together and an extra column is created 
